@@ -14,4 +14,8 @@ angular.module("todoListApp",[])
   $scope.helloWorld = function(){
     console.log('This is the coolController hello world, inheritance is not gonna happen, cause i am defined here')
   };
+})
+
+.controller('iAmSybling', function($scope){
+  $scope.foobar = 1234;
 });
