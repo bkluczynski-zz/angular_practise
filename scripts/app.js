@@ -1,21 +1,42 @@
 angular.module("todoListApp",[])
 
-.controller('mainCtrl', function($scope){
+.controller('mainCtrl', function($scope, dataService){
+
+
+
   $scope.helloWorld = function(){
     console.log('Hello there! This is the hello world controller function in the mainCtrl');
   };
-})
 
-.controller('coolController', function($scope){
-  $scope.WhoAmI = function(){
-    console.log('This is not the main controller, it is cool Controller talkin');
+  dataService.getTodos(function(response){
+    console.log(response.data);
+    $scope.todos = response.data;
+});
+
+  $scope.deleteTodo = function(todo, $index){
+    dataService.deleteTodo(todo);
+    $scope.todos.splice($index, 1);
   }
 
-  $scope.helloWorld = function(){
-    console.log('This is the coolController hello world, inheritance is not gonna happen, cause i am defined here')
-  };
 })
+.service('dataService',function($http){
 
-.controller('iAmSybling', function($scope){
-  $scope.foobar = 1234;
+  this.helloConsole = function(){
+    console.log('this is the hello console service!')
+  };
+    this.getTodos = function(callback){ $http.get('mock/todos.json')
+    .then(callback)
+  };
+
+  this.deleteTodo = function(todo){
+    console.log("the" + todo.name + " has been deleted")
+    //other logic
+  };
+
+  this.saveTodos = function(todo){
+    console.log("the" + todo.name + "has been saved")
+    //other logic
+  };
+
+
 });
